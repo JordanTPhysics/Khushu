@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Khushu</string>
+    <string name="search">Search</string>
+    <string name="title_home">Places</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_maps">Map</string>
+    <string name="add_place">Add Place</string>
+    <string name="remove_place">X</string>
+    <string name="api_key">@string/google_maps_key</string>
+    <string name="title_activity_maps">MapsActivity</string>
+        <string-array name="categories_array">
+            <item>church</item>
+            <item>mosque</item>
+            <item>school</item>
+        </string-array>
+</resources>
