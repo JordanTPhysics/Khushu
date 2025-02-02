@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -21,8 +23,25 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        resValue("string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") as String?) ?: "")
+        //load the values from .properties file
+        val properties = Properties()
+        properties.load(project.rootProject.file("secrets.properties").inputStream())
+
+        //return empty key in case something goes wrong
+        val apiKey = properties.getProperty("GOOGLE_MAPS_API_KEY") ?: "NotFound"
+
+        buildConfigField(
+            type = "String",
+            name = "GOOGLE_MAPS_API_KEY",
+            value = apiKey
+        )
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+
 
     buildTypes {
         release {
