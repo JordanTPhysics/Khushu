@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.khushu.R
@@ -29,14 +30,12 @@ class PlacesRecyclerAdapter(
         val place = places[position]
         holder.placeName.text = place.name
         holder.address.text = place.address
+//        holder.itemView.background
 
         holder.removeButton.setOnClickListener {
-            println("removing place $place")
             onDeleteClick(place)
         }
     }
-
-
 
     override fun getItemCount(): Int = places.size
 

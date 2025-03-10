@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" /> <!--Not needed for Android 13-->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
@@ -20,7 +21,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Khushu"
         tools:targetApi="31">
-        <receiver android:name=".utils.GeofenceBroadcastReceiver"/>
+        <receiver
+            android:name=".utils.GeofenceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.location.GeofenceTransition"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".utils.GeofenceService"
+            android:exported="false"
+            android:foregroundServiceType="location"
+            />
+        <service
+            android:name=".utils.GeofenceBroadcastReceiver"
+            android:exported="false"
+            android:foregroundServiceType="location"
+            />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -37,10 +55,10 @@
             android:value="${GOOGLE_MAPS_API_KEY}" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            tools:targetApi="34">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

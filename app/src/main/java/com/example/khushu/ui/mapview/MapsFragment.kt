@@ -11,12 +11,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.khushu.MainViewModel
 import com.example.khushu.R
 import com.example.khushu.lib.MainViewModelFactory
-
 import com.example.khushu.lib.Place
 import com.example.khushu.utils.LocationService
 import com.example.khushu.utils.PreferencesRepository
@@ -24,7 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import android.content.SharedPreferences
+import com.example.khushu.utils.GeofenceService
 
 class MapsFragment : Fragment() {
 
@@ -37,8 +35,8 @@ class MapsFragment : Fragment() {
         locationService.getLastLocation { location: Location? ->
             location?.let {
                 val userPosition = LatLng(it.latitude, it.longitude)
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userPosition, 15f))}
-                println("User location: $location")
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userPosition, 15f))
+            }
         }
     }
 
@@ -61,7 +59,8 @@ class MapsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val preferencesRepository = PreferencesRepository(sharedPreferences)
         val viewModelFactory = MainViewModelFactory(preferencesRepository, requireContext())
 
@@ -81,16 +80,16 @@ class MapsFragment : Fragment() {
 
         locationService = LocationService(requireContext())
 
-        if(locationService.isPermissionGranted()) {
+        if (locationService.isPermissionGranted()) {
             mapFragment?.getMapAsync { googleMap ->
                 getUserLocation(googleMap)
 
                 googleMap.setOnMarkerClickListener { marker ->
                     val place = Place(
-                        marker.title?: "",
+                        marker.title ?: "",
                         marker.position.latitude,
                         marker.position.longitude,
-                        marker.snippet?: "",
+                        marker.snippet ?: "",
                         dropdown.selectedItem.toString()
                     )
 
@@ -103,21 +102,27 @@ class MapsFragment : Fragment() {
         }
 
         val searchButton = view.findViewById<Button>(R.id.search_button)
+//        val showGeofencesButton = view.findViewById<Button>(R.id.show_geofences_button)
 
         searchButton.setOnClickListener {
             locationService.getLastLocation { location: Location? ->
                 location?.let {
                     mapFragment?.getMapAsync { googleMap ->
-                        mainViewModel.fetchNearbyPlaces(googleMap, it, dropdown.selectedItem.toString())
+                        mainViewModel.fetchNearbyPlaces(
+                            googleMap,
+                            it,
+                            dropdown.selectedItem.toString()
+                        )
                     }
                 }
             }
         }
 
-//        dropdown.setOnItemSelectedListener {
-//            mapFragment?.getMapAsync { googleMap ->
-//                clearMarkers(googleMap)
-//            }
-//        }
+
     }
 }
+
+//        showGeofencesButton.setOnClickListener {
+//            Toast.makeText(requireContext(), geofenceService.getCurrentGeofences().toString(), Toast.LENGTH_LONG).show()
+//        }}
+

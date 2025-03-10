@@ -53,7 +53,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.recyclerView.adapter = adapter
 
         mainViewModel.places.observe(viewLifecycleOwner) { places ->
-            println("RecyclerView updated with ${places.size} places")
             adapter.updatePlaces(places)
         }
 

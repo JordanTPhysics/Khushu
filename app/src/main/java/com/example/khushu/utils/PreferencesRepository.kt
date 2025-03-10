@@ -8,15 +8,25 @@ import com.example.khushu.lib.Place
 class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
 
     private val _places = MutableLiveData<List<Place>>()
+    private var _previousDndMode = -1
+
     val places: LiveData<List<Place>> = _places  // Expose LiveData
+    val previousDndMode: Int = _previousDndMode
+    val geofences = mutableListOf<com.google.android.gms.location.Geofence>()
+
 
     init {
         loadPlaces()  // Load saved places when the repository is initialized
+        getDndMode()
     }
 
     // 🔹 Use this method in ViewModel to get LiveData of places
     fun getPlacesLiveData(): LiveData<List<Place>> {
         return places
+    }
+
+    fun getPlacesSync(): List<Place>? {
+        return places.value
     }
 
     fun addPlace(place: Place) {
@@ -41,6 +51,14 @@ class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
         sharedPreferences.edit().putStringSet("SavedPlaces", jsonPlaces).apply()
 
         _places.value = places  // Update LiveData
+    }
+
+    fun saveDndMode(dndMode: Int) {
+        sharedPreferences.edit().putInt("dndMode", dndMode).apply()
+    }
+
+    fun getDndMode() {
+        _previousDndMode = sharedPreferences.getInt("dndMode", -1)
     }
 }
 

@@ -2,14 +2,19 @@
     <string name="app_name">Khushu</string>
     <string name="search">Search</string>
     <string name="title_home">Places</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_compass">Compass</string>
+    <string name="title_prayer">Prayer</string>
     <string name="title_maps">Map</string>
     <string name="add_place">Add Place</string>
     <string name="remove_place">X</string>
     <string name="title_activity_maps">MapsActivity</string>
-        <string-array name="categories_array">
+    <string name="show_geofences">show geofences</string>
+    <string-array name="categories_array">
             <item>church</item>
             <item>mosque</item>
             <item>school</item>
+            <item>gurdwara</item>
+            <item>library</item>
+            <item>synagogue</item>
         </string-array>
 </resources>

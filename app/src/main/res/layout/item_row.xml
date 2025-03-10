@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"/>
     </LinearLayout>
-
     <Button
         android:id="@+id/removeButton"
         android:layout_width="0dp"

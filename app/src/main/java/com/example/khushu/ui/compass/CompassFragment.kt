@@ -1,4 +1,4 @@
-package com.example.khushu.ui.dashboard
+package com.example.khushu.ui.compass
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.khushu.databinding.FragmentDashboardBinding
 
-class DashboardFragment : Fragment() {
+class CompassFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -23,12 +23,12 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(this).get(CompassViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
+        val textView: TextView = binding.textCompass
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
