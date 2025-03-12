@@ -25,7 +25,6 @@ import com.example.khushu.databinding.ActivityMainBinding
 import com.example.khushu.utils.DndSettings
 import com.example.khushu.utils.GeofenceBroadcastReceiver
 import com.example.khushu.utils.GeofenceService
-import com.example.khushu.utils.LocationUpdateService
 import com.example.khushu.utils.NotificationHelper
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -58,9 +57,6 @@ class MainActivity : AppCompatActivity() {
         // Start the service
         val intent = Intent(this, GeofenceService::class.java)
         startForegroundService(intent)
-
-        val locationIntent = Intent(this, LocationUpdateService::class.java)
-        startService(locationIntent)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
             ?: throw IllegalStateException("Activity does not have a NavHostFragment")

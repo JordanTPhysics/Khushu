@@ -19,12 +19,8 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         val preferencesRepository = PreferencesRepository(sharedPreferences)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationHelper = NotificationHelper(context)
-
-        notificationHelper.sendNotification(
-            "Geofence Receiver",
-            "Received intent: ${intent.action}"
-        )
         val geofencingEvent = GeofencingEvent.fromIntent(intent) ?: return
+
         if (geofencingEvent.hasError()) {
             Log.e("GeofenceService", "Geofencing error: ${geofencingEvent.errorCode}")
             return
@@ -47,7 +43,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                     place?.let {
                         notificationHelper.sendNotification(
                             "Entering ${place.name}",
-                            "DND settings enabled."
+                            "Do Not Disturb activated."
                         )
                     }
                 }
@@ -58,11 +54,11 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                     place?.let {
                         notificationHelper.sendNotification(
                             "Leaving ${place.name}",
-                            "DND restored to ${preferencesRepository.previousDndMode}."
+                            "Do Not Disturb setting restored."
                         )
                     }
                 }
-                notificationManager.setInterruptionFilter(preferencesRepository.previousDndMode)
+                notificationManager.setInterruptionFilter(preferencesRepository.getDndMode())
             }
         }
     }

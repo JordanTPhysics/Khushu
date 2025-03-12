@@ -8,11 +8,9 @@ import com.example.khushu.lib.Place
 class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
 
     private val _places = MutableLiveData<List<Place>>()
-    private var _previousDndMode = -1
 
     val places: LiveData<List<Place>> = _places  // Expose LiveData
-    val previousDndMode: Int = _previousDndMode
-    val geofences = mutableListOf<com.google.android.gms.location.Geofence>()
+    var previousDndMode: Int = -1
 
 
     init {
@@ -57,9 +55,10 @@ class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
         sharedPreferences.edit().putInt("dndMode", dndMode).apply()
     }
 
-    fun getDndMode() {
-        _previousDndMode = sharedPreferences.getInt("dndMode", -1)
+    fun getDndMode(): Int {
+        return sharedPreferences.getInt("dndMode", -1) // Default to -1 if not found
     }
+
 }
 
 fun String.toPlaceOrNull(): Place? {

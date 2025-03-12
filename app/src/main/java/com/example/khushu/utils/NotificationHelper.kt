@@ -5,6 +5,7 @@ import com.example.khushu.R
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
@@ -37,8 +38,8 @@ class NotificationHelper(private val context: Context) {
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     fun sendNotification(title: String, message: String) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID) // Use the same channel ID
-            .setSmallIcon(R.drawable.ic_location)
-            .setBadgeIconType(androidx.core.R.drawable.notification_icon_background)
+            .setSmallIcon(R.drawable.location_on_24dp)
+            .setColor(context.getColor(R.color.purple_500))
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -48,4 +49,5 @@ class NotificationHelper(private val context: Context) {
         notificationManager.notify(1001, builder.build()) // Unique ID for notification
     }
 }
+
 

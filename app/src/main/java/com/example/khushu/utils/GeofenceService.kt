@@ -31,7 +31,6 @@ class GeofenceService : LifecycleService() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d("GeofenceService", "Service started")
         geofencingClient = LocationServices.getGeofencingClient(this)
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
@@ -77,7 +76,7 @@ class GeofenceService : LifecycleService() {
             places.forEach { place ->
                 val geofence = Geofence.Builder()
                     .setRequestId(place.name)
-                    .setCircularRegion(place.lat, place.lng, 100f)
+                    .setCircularRegion(place.lat, place.lng, 50f)
                     .setExpirationDuration(Geofence.NEVER_EXPIRE)
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                     .build()
@@ -93,11 +92,13 @@ class GeofenceService : LifecycleService() {
 
             geofencingClient.addGeofences(geofencingRequest, getGeofencePendingIntent())
                 .addOnSuccessListener {
-                    notificationHelper.sendNotification("Geofences added", "Monitoring ${geofenceList.size} geofences.")
                     _geofenceLiveData.postValue(geofenceList)
-
                 }
-                .addOnFailureListener { e -> Log.e("GeofenceService", "Failed to add geofences", e) }
+                .addOnFailureListener {
+                    e -> notificationHelper.sendNotification(
+                        "Geofence Error",
+                        "Failed to add geofences, restart the app or contact support."
+                    ) }
         }
     }
 
@@ -127,6 +128,7 @@ class GeofenceService : LifecycleService() {
         return NotificationCompat.Builder(this, "channelId")
             .setContentTitle("Geofence Service Running")
             .setContentText("Monitoring geofences for saved places.")
+            .setColor(getColor(R.color.purple_500))
             .setSmallIcon(R.drawable.location_on_24dp)
             .setContentIntent(pendingIntent)
             .build()
