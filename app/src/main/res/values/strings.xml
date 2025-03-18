@@ -9,19 +9,21 @@
     <string name="remove_place">X</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="show_geofences">show geofences</string>
+    <string name="set_radius">Set Radius</string>
+    <string name="set_category">Set Category</string>
     <string-array name="categories_array">
-            <item>church</item>
-            <item>mosque</item>
-            <item>school</item>
-            <item>gurdwara</item>
-            <item>library</item>
-            <item>synagogue</item>
-        </string-array>
+        <item>mosque</item>
+        <item>church</item>
+        <item>school</item>
+        <item>gurdwara</item>
+        <item>library</item>
+        <item>synagogue</item>
+    </string-array>
     <string-array name="radius_array">
-            <item>1 km</item>
-            <item>2 km</item>
-            <item>5 km</item>
-            <item>10 km</item>
-            <item>20 km</item>
-        </string-array>
+        <item>1 km</item>
+        <item>2 km</item>
+        <item>5 km</item>
+        <item>10 km</item>
+        <item>20 km</item>
+    </string-array>
 </resources>

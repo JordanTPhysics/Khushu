@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
@@ -45,13 +44,22 @@ class MainViewModel(
     }
 
     fun removePlace(place: Place) {
+        val placeToRemove = places.value.orEmpty().find { doesPlaceNameLocationExist(place) }
         val currentPlaces = places.value.orEmpty().toMutableList()
-        currentPlaces.remove(place)
+        currentPlaces.remove(placeToRemove)
         preferencesRepository.savePlaces(currentPlaces)
+    }
+
+    fun getPlaceByNameLocation(place: Place): Place? {
+        return places.value.orEmpty().find { it.name == place.name && it.lat == place.lat && it.lng == place.lng }
     }
 
     fun doesPlaceExist(place: Place): Boolean {
         return places.value.orEmpty().contains(place)
+    }
+
+    fun doesPlaceNameLocationExist(place: Place): Boolean {
+        return places.value.orEmpty().any { it.name == place.name && it.lat == place.lat && it.lng == place.lng }
     }
 
     fun latLngToLocation(latLng: LatLng): Location {
@@ -59,6 +67,10 @@ class MainViewModel(
         location.latitude = latLng.latitude
         location.longitude = latLng.longitude
         return location
+    }
+
+    fun prettifyDouble(double: Double): String {
+        return String.format("%.2f", double)
     }
 
     fun addCirclesToMap(googleMap: GoogleMap) {
@@ -84,7 +96,7 @@ class MainViewModel(
                 MarkerOptions().position(latLng).title(place.name).snippet(place.address)
             )
             marker?.setIcon(BitmapDescriptorFactory
-                .defaultMarker(if (doesPlaceExist(place)) BitmapDescriptorFactory.HUE_AZURE else BitmapDescriptorFactory.HUE_RED))  // How to set color of
+                .defaultMarker(BitmapDescriptorFactory.HUE_AZURE))  // How to set color of
             marker?.tag = place
         }
     }

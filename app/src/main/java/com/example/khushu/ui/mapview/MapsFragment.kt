@@ -24,7 +24,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.example.khushu.utils.GeofenceService
 
 class MapsFragment : Fragment() {
 
@@ -90,7 +89,7 @@ class MapsFragment : Fragment() {
     private fun showExistingPlaceDialog(place: Place) {
         val dialog = AlertDialog.Builder(requireContext()).apply {
             setTitle(place.name)
-            setMessage("${place.address}\n\n ${place.type} at ${place.lat}, ${place.lng}")
+            setMessage("${place.address}\n\n ${place.type} at ${mainViewModel.prettifyDouble(place.lat)}, ${mainViewModel.prettifyDouble(place.lng)}")
             setPositiveButton("Remove") { _, _ ->
                 mainViewModel.removePlace(place)
                 Toast.makeText(requireContext(), "Place removed", Toast.LENGTH_SHORT).show()
@@ -142,10 +141,11 @@ class MapsFragment : Fragment() {
                         marker.snippet ?: "",
                         categorySpinner.selectedItem.toString()
                     )
-                    if (mainViewModel.doesPlaceExist(place)) {
-                        showAddPlaceDialog(place)
+                    if (mainViewModel.doesPlaceNameLocationExist(place)) {
+                        mainViewModel.getPlaceByNameLocation(place)
+                            ?.let { showExistingPlaceDialog(it) }
                     } else {
-                        showExistingPlaceDialog(place)
+                        showAddPlaceDialog(place)
                     }
                     true
                 }
