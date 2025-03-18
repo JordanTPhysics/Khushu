@@ -1,6 +1,7 @@
 package com.example.khushu
 
 import android.content.Context
+import android.graphics.Color
 import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CircleOptions
 
 class MainViewModel(
     private val preferencesRepository: PreferencesRepository,
@@ -52,10 +54,58 @@ class MainViewModel(
         return places.value.orEmpty().contains(place)
     }
 
-    fun fetchNearbyPlaces(googleMap: GoogleMap, location: Location, placeType: String) {
+    fun latLngToLocation(latLng: LatLng): Location {
+        val location = Location("")
+        location.latitude = latLng.latitude
+        location.longitude = latLng.longitude
+        return location
+    }
+
+    fun addCirclesToMap(googleMap: GoogleMap) {
+        val places = places.value.orEmpty()
+        for (place in places) {
+            val latLng = LatLng(place.lat, place.lng)
+            googleMap.addCircle(
+                CircleOptions()
+                    .center(latLng)
+                    .radius(50.0) // Example radius in meters
+                    .strokeColor(Color.BLUE) // Border color
+                    .strokeWidth(2f) // Border width
+                    .fillColor(Color.argb(50, 0, 10, 175)) // Fill color with transparency
+            )
+        }
+    }
+
+    fun addExistingPlacesToMap(googleMap: GoogleMap) {
+        val places = places.value.orEmpty()
+        for (place in places) {
+            val latLng = LatLng(place.lat, place.lng)
+            val marker = googleMap.addMarker(
+                MarkerOptions().position(latLng).title(place.name).snippet(place.address)
+            )
+            marker?.setIcon(BitmapDescriptorFactory
+                .defaultMarker(if (doesPlaceExist(place)) BitmapDescriptorFactory.HUE_AZURE else BitmapDescriptorFactory.HUE_RED))  // How to set color of
+            marker?.tag = place
+        }
+    }
+
+    fun selectionToRadius(selection: String): Int {
+        return when (selection) {
+            "1 km" -> 1000
+            "2 km" -> 2000
+            "5 km" -> 5000
+            "10 km" -> 10000
+            "20 km" -> 20000
+            else -> 1500
+        }
+
+    }
+
+    fun fetchNearbyPlaces(googleMap: GoogleMap, location: Location, placeType: String, radius: String) {
+
         val apiKey = BuildConfig.GOOGLE_MAPS_API_KEY
         val url =
-            "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.latitude},${location.longitude}&radius=1500&type=${placeType}&key=${apiKey}"
+            "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.latitude},${location.longitude}&radius=${selectionToRadius(radius)}&type=${placeType}&key=${apiKey}"
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             { response ->

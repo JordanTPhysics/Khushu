@@ -1,20 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
 
     <ImageView
-        android:id="@+id/compass_needle"
+        android:id="@+id/compass"
+        android:layout_marginHorizontal="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/cardinal_point" />
+        android:src="@drawable/qibla_compass" />
+
+    <ImageView
+        android:id="@+id/qibla_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/qibla"
+        android:layout_centerInParent="true"
+        android:translationY="-210dp"
+        />
 
     <TextView
         android:id="@+id/text_compass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/compass_needle"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/compass"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="197dp"
         android:text="N"
         android:textSize="24sp" />
 </RelativeLayout>

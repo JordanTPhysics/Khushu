@@ -17,4 +17,11 @@
             <item>library</item>
             <item>synagogue</item>
         </string-array>
+    <string-array name="radius_array">
+            <item>1 km</item>
+            <item>2 km</item>
+            <item>5 km</item>
+            <item>10 km</item>
+            <item>20 km</item>
+        </string-array>
 </resources>

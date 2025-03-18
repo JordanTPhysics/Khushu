@@ -1,5 +1,6 @@
 package com.example.khushu.ui.mapview
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.location.Location
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +30,8 @@ class MapsFragment : Fragment() {
 
     private lateinit var locationService: LocationService
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var dropdown: Spinner
+    private lateinit var categorySpinner: Spinner
+    private lateinit var radiusSpinner: Spinner
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
 
     private fun getUserLocation(googleMap: GoogleMap) {
@@ -40,6 +43,35 @@ class MapsFragment : Fragment() {
         }
     }
 
+    private fun showAddCustomPlaceDialog(latLng: LatLng) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.custom_place_dialog, null)
+        val editTextPlaceName = dialogView.findViewById<EditText>(R.id.editTextPlaceName)
+
+        val dialog = AlertDialog.Builder(requireContext()).apply {
+            setTitle("Add Custom Place")
+            setView(dialogView)
+            setPositiveButton("Add") { _, _ ->
+                val placeName = editTextPlaceName.text.toString()
+                if (placeName.isNotEmpty()) {
+                    val place = Place(
+                        placeName,
+                        latLng.latitude,
+                        latLng.longitude,
+                        "$placeName at ${latLng.latitude}, ${latLng.longitude}",
+                        "custom"
+                    )
+                    mainViewModel.addPlace(place)
+                    Toast.makeText(requireContext(), "Place added", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Place name cannot be empty", Toast.LENGTH_SHORT).show()
+                }
+            }
+            setNegativeButton("Cancel", null)
+        }.create()
+
+        dialog.show()
+    }
+
     private fun showAddPlaceDialog(place: Place) {
         val dialog = AlertDialog.Builder(requireContext()).apply {
             setTitle("Add Place")
@@ -49,6 +81,22 @@ class MapsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Place added", Toast.LENGTH_SHORT).show()
             }
             setNegativeButton("Cancel", null)
+
+        }.create()
+
+        dialog.show()
+    }
+
+    private fun showExistingPlaceDialog(place: Place) {
+        val dialog = AlertDialog.Builder(requireContext()).apply {
+            setTitle(place.name)
+            setMessage("${place.address}\n\n ${place.type} at ${place.lat}, ${place.lng}")
+            setPositiveButton("Remove") { _, _ ->
+                mainViewModel.removePlace(place)
+                Toast.makeText(requireContext(), "Place removed", Toast.LENGTH_SHORT).show()
+            }
+            setNegativeButton("Cancel", null)
+
         }.create()
 
         dialog.show()
@@ -73,56 +121,68 @@ class MapsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
+    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        dropdown = view.findViewById(R.id.category_spinner)
+        categorySpinner = view.findViewById(R.id.category_spinner)
+        radiusSpinner = view.findViewById(R.id.radius_spinner)
 
         locationService = LocationService(requireContext())
 
         if (locationService.isPermissionGranted()) {
             mapFragment?.getMapAsync { googleMap ->
                 getUserLocation(googleMap)
-
+                googleMap.isMyLocationEnabled = true
                 googleMap.setOnMarkerClickListener { marker ->
                     val place = Place(
                         marker.title ?: "",
                         marker.position.latitude,
                         marker.position.longitude,
                         marker.snippet ?: "",
-                        dropdown.selectedItem.toString()
+                        categorySpinner.selectedItem.toString()
                     )
-
-                    showAddPlaceDialog(place)
+                    if (mainViewModel.doesPlaceExist(place)) {
+                        showAddPlaceDialog(place)
+                    } else {
+                        showExistingPlaceDialog(place)
+                    }
                     true
                 }
+
+                googleMap.setOnMapClickListener { latLng ->
+                    showAddCustomPlaceDialog(latLng)
+                }
+
+                mainViewModel.addCirclesToMap(googleMap)
+                mainViewModel.addExistingPlacesToMap(googleMap)
+
+                categorySpinner.post {
+                    categorySpinner.dropDownVerticalOffset = -categorySpinner.height
+                }
+
+                radiusSpinner.post {
+                    radiusSpinner.dropDownVerticalOffset = -radiusSpinner.height
+                }
+
             }
         } else {
             locationService.requestPermission(requireActivity(), LOCATION_PERMISSION_REQUEST_CODE)
         }
 
         val searchButton = view.findViewById<Button>(R.id.search_button)
-//        val showGeofencesButton = view.findViewById<Button>(R.id.show_geofences_button)
 
         searchButton.setOnClickListener {
-            locationService.getLastLocation { location: Location? ->
-                location?.let {
-                    mapFragment?.getMapAsync { googleMap ->
-                        mainViewModel.fetchNearbyPlaces(
-                            googleMap,
-                            it,
-                            dropdown.selectedItem.toString()
-                        )
-                    }
-                }
+            mapFragment?.getMapAsync { googleMap ->
+                mainViewModel.fetchNearbyPlaces(
+                    googleMap,
+                    mainViewModel.latLngToLocation(googleMap.cameraPosition.target),
+                    categorySpinner.selectedItem.toString(),
+                    radiusSpinner.selectedItem.toString()
+                )
             }
         }
-
-
     }
 }
 
-//        showGeofencesButton.setOnClickListener {
-//            Toast.makeText(requireContext(), geofenceService.getCurrentGeofences().toString(), Toast.LENGTH_LONG).show()
-//        }}
 
