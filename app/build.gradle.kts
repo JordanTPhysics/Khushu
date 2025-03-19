@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.pathfinder.khushu"
-    compileSdk = 34
+    compileSdk = 30
 
     viewBinding {
         enable = true
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.pathfinder.khushu"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 

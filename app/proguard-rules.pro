@@ -20,4 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.example.khushu.BuildConfig { *; }
+-keep class com.pathfinder.khushu.BuildConfig { *; }
