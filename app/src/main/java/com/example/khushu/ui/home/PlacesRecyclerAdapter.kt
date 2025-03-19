@@ -1,4 +1,4 @@
-package com.example.khushu.ui.home
+package com.pathfinder.khushu.ui.home
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.khushu.R
-import com.example.khushu.lib.Place
+import com.pathfinder.khushu.R
+import com.pathfinder.khushu.lib.Place
 
 class PlacesRecyclerAdapter(
     private var places: List<Place>,
@@ -30,7 +30,6 @@ class PlacesRecyclerAdapter(
         val place = places[position]
         holder.placeName.text = place.name
         holder.address.text = place.address
-//        holder.itemView.background
 
         holder.removeButton.setOnClickListener {
             onDeleteClick(place)

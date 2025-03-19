@@ -1,4 +1,4 @@
-package com.example.khushu
+package com.pathfinder.khushu
 
 import android.content.Context
 import android.graphics.Color
@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModel
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.khushu.lib.Place
-import com.example.khushu.utils.GeofenceService
-import com.example.khushu.utils.PreferencesRepository
+import com.pathfinder.khushu.lib.Place
+import com.pathfinder.khushu.utils.GeofenceService
+import com.pathfinder.khushu.utils.PreferencesRepository
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng

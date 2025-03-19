@@ -11,6 +11,7 @@
     <string name="show_geofences">show geofences</string>
     <string name="set_radius">Set Radius</string>
     <string name="set_category">Set Category</string>
+    <string name="no_places_message">You have 0 saved places, switch to the Map to add new places to activate Dnd settings</string>
     <string-array name="categories_array">
         <item>mosque</item>
         <item>church</item>

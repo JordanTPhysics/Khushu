@@ -1,4 +1,4 @@
-package com.example.khushu
+package com.pathfinder.khushu
 
 import org.junit.Test
 

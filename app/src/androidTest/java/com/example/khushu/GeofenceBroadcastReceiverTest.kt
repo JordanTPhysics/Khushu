@@ -1,7 +1,7 @@
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.example.khushu.utils.GeofenceBroadcastReceiver
+import com.pathfinder.khushu.utils.GeofenceBroadcastReceiver
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 import org.junit.Test

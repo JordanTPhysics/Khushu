@@ -1,10 +1,10 @@
-package com.example.khushu.lib
+package com.pathfinder.khushu.lib
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.khushu.MainViewModel
-import com.example.khushu.utils.PreferencesRepository
+import com.pathfinder.khushu.MainViewModel
+import com.pathfinder.khushu.utils.PreferencesRepository
 
 class MainViewModelFactory(private val preferencesRepository: PreferencesRepository, private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -1,4 +1,4 @@
-package com.example.khushu.utils
+package com.pathfinder.khushu.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity

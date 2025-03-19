@@ -1,6 +1,6 @@
-package com.example.khushu.lib
+package com.pathfinder.khushu.lib
 
-import com.example.khushu.utils.GeofenceService
+import com.pathfinder.khushu.utils.GeofenceService
 
 data class Place(val name: String, val lat: Double, val lng: Double, val address: String, val type: String) {
 

@@ -1,7 +1,7 @@
-package com.example.khushu.utils
+package com.pathfinder.khushu.utils
 
 import android.Manifest
-import com.example.khushu.R
+import com.pathfinder.khushu.R
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context

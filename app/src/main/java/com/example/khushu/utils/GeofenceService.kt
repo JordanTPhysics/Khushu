@@ -1,4 +1,4 @@
-package com.example.khushu.utils
+package com.pathfinder.khushu.utils
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
@@ -14,9 +14,9 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.khushu.MainActivity
-import com.example.khushu.R
-import com.example.khushu.lib.Place
+import com.pathfinder.khushu.MainActivity
+import com.pathfinder.khushu.R
+import com.pathfinder.khushu.lib.Place
 import com.google.android.gms.location.*
 
 

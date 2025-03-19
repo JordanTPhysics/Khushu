@@ -1,4 +1,4 @@
-package com.example.khushu
+package com.pathfinder.khushu
 
 import android.app.ActivityManager
 import android.content.Context
@@ -6,7 +6,7 @@ import android.content.Intent
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ServiceTestRule
-import com.example.khushu.utils.GeofenceService
+import com.pathfinder.khushu.utils.GeofenceService
 
 import org.junit.Test
 import org.junit.runner.RunWith

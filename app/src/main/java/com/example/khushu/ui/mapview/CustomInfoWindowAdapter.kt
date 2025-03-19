@@ -1,13 +1,13 @@
-package com.example.khushu.ui.mapview
+package com.pathfinder.khushu.ui.mapview
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import com.example.khushu.R
-import com.example.khushu.lib.Place
-import com.example.khushu.utils.PreferencesRepository
+import com.pathfinder.khushu.R
+import com.pathfinder.khushu.lib.Place
+import com.pathfinder.khushu.utils.PreferencesRepository
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
