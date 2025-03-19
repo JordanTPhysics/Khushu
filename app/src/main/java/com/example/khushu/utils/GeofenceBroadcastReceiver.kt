@@ -1,4 +1,4 @@
-package com.example.khushu.utils
+package com.pathfinder.khushu.utils
 
 import android.Manifest
 import android.app.NotificationManager

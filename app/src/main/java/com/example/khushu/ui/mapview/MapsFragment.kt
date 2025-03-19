@@ -1,4 +1,4 @@
-package com.example.khushu.ui.mapview
+package com.pathfinder.khushu.ui.mapview
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -14,12 +14,12 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.khushu.MainViewModel
-import com.example.khushu.R
-import com.example.khushu.lib.MainViewModelFactory
-import com.example.khushu.lib.Place
-import com.example.khushu.utils.LocationService
-import com.example.khushu.utils.PreferencesRepository
+import com.pathfinder.khushu.MainViewModel
+import com.pathfinder.khushu.R
+import com.pathfinder.khushu.lib.MainViewModelFactory
+import com.pathfinder.khushu.lib.Place
+import com.pathfinder.khushu.utils.LocationService
+import com.pathfinder.khushu.utils.PreferencesRepository
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment

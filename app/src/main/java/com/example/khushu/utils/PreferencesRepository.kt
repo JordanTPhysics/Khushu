@@ -1,9 +1,9 @@
-package com.example.khushu.utils
+package com.pathfinder.khushu.utils
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.khushu.lib.Place
+import com.pathfinder.khushu.lib.Place
 
 class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
 

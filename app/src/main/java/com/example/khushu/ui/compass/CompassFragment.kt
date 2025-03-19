@@ -1,4 +1,4 @@
-package com.example.khushu.ui.compass
+package com.pathfinder.khushu.ui.compass
 
 import android.content.Context
 import android.hardware.Sensor
@@ -14,10 +14,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.khushu.R
-import com.example.khushu.databinding.FragmentCompassBinding
-import com.example.khushu.utils.LocationService
+import com.pathfinder.khushu.R
+import com.pathfinder.khushu.databinding.FragmentCompassBinding
+import com.pathfinder.khushu.utils.LocationService
 import com.google.android.gms.maps.model.LatLng
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -41,8 +40,6 @@ class CompassFragment : Fragment(), SensorEventListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val compassViewModel =
-            ViewModelProvider(this).get(CompassViewModel::class.java)
 
         _binding = FragmentCompassBinding.inflate(inflater, container, false)
         val root: View = binding.root

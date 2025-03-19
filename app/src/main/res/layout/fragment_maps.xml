@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_weight="1"
-            android:entries="@array/categories_array"
             android:text="@string/set_category"
             android:textColor="@color/white"
              />
@@ -37,7 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_weight="1"
-            android:entries="@array/radius_array"
             android:textColor="@color/white"
             android:text="@string/set_radius"
             />
@@ -53,7 +51,7 @@
         <Spinner
             android:id="@+id/category_spinner"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginHorizontal="2dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_spinner"
@@ -68,7 +66,7 @@
         <Spinner
             android:id="@+id/radius_spinner"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginHorizontal="16dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_spinner"
@@ -80,11 +78,19 @@
 
             />
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/place_add_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:textAlignment="center"
+        android:text="Hit search to find places that match the selection from the center of the map, or add a custom location by tapping anywhere on the map"
+        android:textColor="@color/white"
+        />
     <Button
         android:id="@+id/search_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="@string/search"
         android:layout_marginHorizontal="100dp"
         />

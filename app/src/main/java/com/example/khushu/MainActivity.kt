@@ -1,4 +1,4 @@
-package com.example.khushu
+package com.pathfinder.khushu
 
 import android.Manifest
 import android.app.NotificationManager
@@ -21,11 +21,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.khushu.databinding.ActivityMainBinding
-import com.example.khushu.utils.DndSettings
-import com.example.khushu.utils.GeofenceBroadcastReceiver
-import com.example.khushu.utils.GeofenceService
-import com.example.khushu.utils.NotificationHelper
+import com.pathfinder.khushu.databinding.ActivityMainBinding
+import com.pathfinder.khushu.utils.DndSettings
+import com.pathfinder.khushu.utils.GeofenceBroadcastReceiver
+import com.pathfinder.khushu.utils.GeofenceService
+import com.pathfinder.khushu.utils.NotificationHelper
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 

@@ -1,4 +1,4 @@
-package com.example.khushu.ui.home
+package com.pathfinder.khushu.ui.home
 
 import android.content.Context
 import android.os.Bundle
@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.khushu.MainViewModel
-import com.example.khushu.R
-import com.example.khushu.databinding.FragmentHomeBinding
-import com.example.khushu.lib.MainViewModelFactory
-import com.example.khushu.utils.PreferencesRepository
+import com.pathfinder.khushu.MainViewModel
+import com.pathfinder.khushu.R
+import com.pathfinder.khushu.databinding.FragmentHomeBinding
+import com.pathfinder.khushu.lib.MainViewModelFactory
+import com.pathfinder.khushu.utils.PreferencesRepository
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -54,6 +54,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         mainViewModel.places.observe(viewLifecycleOwner) { places ->
             adapter.updatePlaces(places)
+            if (places.isEmpty()) {
+                binding.emptyMessage.visibility = View.VISIBLE
+            } else {
+                binding.emptyMessage.visibility = View.GONE
+
+            }
         }
 
     }
