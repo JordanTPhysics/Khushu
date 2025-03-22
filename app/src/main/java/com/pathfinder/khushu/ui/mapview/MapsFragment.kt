@@ -153,9 +153,12 @@ class MapsFragment : Fragment() {
                 googleMap.setOnMapClickListener { latLng ->
                     showAddCustomPlaceDialog(latLng)
                 }
-
-                mainViewModel.addCirclesToMap(googleMap)
-                mainViewModel.addExistingPlacesToMap(googleMap)
+                mainViewModel.places.observe(viewLifecycleOwner) { places ->
+                    if (places.isNotEmpty()) {
+                        mainViewModel.addCirclesToMap(googleMap)
+                        mainViewModel.addExistingPlacesToMap(googleMap)
+                    }
+                }
 
                 categorySpinner.post {
                     categorySpinner.dropDownVerticalOffset = -categorySpinner.height

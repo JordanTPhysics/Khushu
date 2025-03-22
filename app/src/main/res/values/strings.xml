@@ -12,6 +12,14 @@
     <string name="set_radius">Set Radius</string>
     <string name="set_category">Set Category</string>
     <string name="no_places_message">You have 0 saved places, switch to the Map to add new places to activate Dnd settings</string>
+    <string name="welcome_to_khushu">Welcome to Khushu!</string>
+    <string name="got_it">Got it!</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="rewatch_tutorial">Rewatch Tutorial</string>
+    <string name="showing_app_functionality">Showing app functionality</string>
+    <string name="tutorial_1_text">Welcome to Khushu! This tutorial will guide you through the app. register masjids where you pray and don\'t want to be disturbed by your phone.</string>
+    <string name="close">X</string>
     <string-array name="categories_array">
         <item>mosque</item>
         <item>church</item>

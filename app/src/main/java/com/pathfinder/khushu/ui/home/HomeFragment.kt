@@ -1,6 +1,7 @@
 package com.pathfinder.khushu.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pathfinder.khushu.MainViewModel
 import com.pathfinder.khushu.R
+import com.pathfinder.khushu.TutorialActivity
 import com.pathfinder.khushu.databinding.FragmentHomeBinding
 import com.pathfinder.khushu.lib.MainViewModelFactory
 import com.pathfinder.khushu.utils.PreferencesRepository
@@ -62,6 +64,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
+        binding.btnTutorial.setOnClickListener {
+            startTutorial()
+        }
+
+    }
+
+    private fun startTutorial() {
+        val intent = Intent(requireContext(), TutorialActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

@@ -21,5 +21,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:listitem="@layout/item_row"
-        android:layout_weight="1" />
+        android:layout_weight="10" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="50dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/rewatch_tutorial"
+        android:id="@+id/btnTutorial"
+        android:background="@color/black"
+        android:textColor="@color/goldenrod"
+        android:textSize="16sp"
+        />
+
 </LinearLayout>

@@ -38,8 +38,7 @@ class NotificationHelper(private val context: Context) {
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     fun sendNotification(title: String, message: String) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID) // Use the same channel ID
-            .setSmallIcon(R.drawable.location_on_24dp)
-            .setColor(context.getColor(R.color.purple_500))
+            .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

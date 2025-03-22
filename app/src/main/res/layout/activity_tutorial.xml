@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/purple_700"
+    >
+
+    <TextView
+        android:id="@+id/tutorialTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/welcome_to_khushu"
+        android:textColor="@color/goldenrod"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:background="@color/purple_700"
+        android:paddingVertical="5dp"
+        />
+    <ImageView
+        android:id="@+id/tutorialImageView"
+        android:layout_width="match_parent"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:contentDescription="@string/showing_app_functionality" />
+
+    <TextView
+        android:id="@+id/tutorialTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/tutorial_1_text"
+        android:paddingHorizontal="10dp"
+        android:textColor="@color/goldenrod"
+        android:textSize="16sp"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/btnPrevTutorial"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:textColor="@color/goldenrod"
+            android:enabled="false"
+            android:background="@drawable/rounded_spinner" />
+
+        <Button
+            android:id="@+id/btnNextTutorial"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:textColor="@color/goldenrod"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            android:background="@drawable/rounded_spinner"
+
+            />
+
+        <Button
+            android:id="@+id/btnFinishTutorial"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:textColor="@color/goldenrod"
+            android:layout_height="wrap_content"
+            android:text="@string/got_it"
+            android:enabled="false"
+
+            />
+    </LinearLayout>
+
+</LinearLayout>

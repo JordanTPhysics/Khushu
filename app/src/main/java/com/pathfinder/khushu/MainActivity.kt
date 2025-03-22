@@ -1,8 +1,8 @@
 package com.pathfinder.khushu
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,7 +13,6 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -23,28 +22,33 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.pathfinder.khushu.databinding.ActivityMainBinding
 import com.pathfinder.khushu.utils.DndSettings
-import com.pathfinder.khushu.utils.GeofenceBroadcastReceiver
 import com.pathfinder.khushu.utils.GeofenceService
 import com.pathfinder.khushu.utils.NotificationHelper
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@SuppressLint("NewApi")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val permissions = arrayOf(
+        Manifest.permission.FOREGROUND_SERVICE_LOCATION,
         Manifest.permission.POST_NOTIFICATIONS,
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.ACCESS_NOTIFICATION_POLICY,
         Manifest.permission.FOREGROUND_SERVICE,
-        Manifest.permission.FOREGROUND_SERVICE_LOCATION,
         )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+        if(!sharedPreferences.getBoolean("hasSeenTutorial", false)) {
+           startTutorial()
+        }
 
         requestPermissionsIfNeeded()
         checkNotificationSettings()
@@ -53,16 +57,15 @@ class MainActivity : AppCompatActivity() {
 
         NotificationHelper.createNotificationChannel(this)
         DndSettings(this).requestDndPermission()
-
-        // Start the service
-        val intent = Intent(this, GeofenceService::class.java)
-        startForegroundService(intent)
+        startGeofenceService()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
             ?: throw IllegalStateException("Activity does not have a NavHostFragment")
 
         val navController: NavController = navHostFragment.navController
         val bottomNavigationView = binding.navView
+
+        supportActionBar?.hide()
 
         bottomNavigationView.setupWithNavController(navController)
         val appBarConfiguration = AppBarConfiguration(
@@ -81,14 +84,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestPermissionsIfNeeded() {
-        var missingPermissions = permissions.filter {
+        val missingPermissions = permissions.filter {
             ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
-        }
-
-        if(missingPermissions.contains(Manifest.permission.FOREGROUND_SERVICE_LOCATION)){
-            if (Build.VERSION.SDK_INT < 34) {
-                missingPermissions = missingPermissions.filter { it != Manifest.permission.FOREGROUND_SERVICE_LOCATION }
-            }
         }
 
         if (missingPermissions.isNotEmpty()) {
@@ -96,6 +93,19 @@ class MainActivity : AppCompatActivity() {
             permissionLauncher.launch(missingPermissions.toTypedArray())
         } else {
             Log.d("Permissions", "All permissions already granted")
+        }
+    }
+
+    private fun startGeofenceService() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED &&
+            (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU || ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED)) {
+
+            val intent = Intent(this, GeofenceService::class.java)
+            startForegroundService(intent)
+        } else {
+            Toast.makeText(this, "Location permission required", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -134,7 +144,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun startTutorial() {
+        val intent = Intent(this, TutorialActivity::class.java)
+        startActivity(intent)
+    }
 
     private fun checkGooglePlayServices(context: Context): Boolean {
         val googleApiAvailability = GoogleApiAvailability.getInstance()

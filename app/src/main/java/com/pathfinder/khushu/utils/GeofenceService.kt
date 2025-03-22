@@ -128,8 +128,7 @@ class GeofenceService : LifecycleService() {
         return NotificationCompat.Builder(this, "channelId")
             .setContentTitle("Geofence Service Running")
             .setContentText("Monitoring geofences for saved places.")
-            .setColor(getColor(R.color.purple_500))
-            .setSmallIcon(R.drawable.location_on_24dp)
+            .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentIntent(pendingIntent)
             .build()
     }

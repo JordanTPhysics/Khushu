@@ -9,18 +9,15 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.pathfinder.khushu.ui.home.HomeFragment"
-        android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_compass"
         android:name="com.pathfinder.khushu.ui.compass.CompassFragment"
-        android:label="@string/title_compass"
         tools:layout="@layout/fragment_compass" />
 
     <fragment
         android:id="@+id/navigation_maps"
         android:name="com.pathfinder.khushu.ui.mapview.MapsFragment"
-        android:label="@string/title_maps"
         tools:layout="@layout/fragment_maps" />
 </navigation>
